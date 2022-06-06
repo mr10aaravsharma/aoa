@@ -1,0 +1,908 @@
+Is
+
+#include <stdio.h>
+#include <time.h>
+void sort(int arr[],int n)
+{
+    for(int i=1;i<n;i++)
+{
+    int key=arr[i];
+    int j=i-1;
+    for(j=i-1;j>=0&&key<=arr[j];j--)
+    {
+       arr[j+1]=arr[j];
+    }
+    arr[j+1]=key;
+}
+}
+void print(int arr[],int n)
+{
+    for(int i=0;i<n;i++)
+{
+printf(" %d ",arr[i]);
+}
+}
+int main(){ 
+    int n;
+    printf("Enter no of element in array\n");
+    scanf("%d",&n);
+int arr[n];
+for(int i=0;i<n;i++)
+{
+printf("Enter %d element ",i+1);scanf("%d",&arr[i]);
+}
+print(arr,n);
+clock_t t;
+t =clock();
+printf("Timer starts\n");
+sort(arr,n);
+printf("Timer ends\n");
+t = clock() - t;
+double time_taken = ((double)t)/CLOCKS_PER_SEC;
+printf("The program took %f seconds to execute", time_taken);
+}
+
+
+
+
+Ss
+
+#include <stdio.h>
+#include <time.h>
+void swap(int *a, int *b)
+{
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+void selectionSort(int array[], int size)
+{ 
+    for (int step = 0; step < size - 1; step++) {
+        int min_idx = step;
+    for (int i = step + 1; i < size; i++) {
+    if (array[i] < array[min_idx])min_idx= i;
+}
+swap(&array[min_idx], &array[step]);
+}
+}
+void printArray(int array[], int size) {
+    for (int i = 0; i < size; ++i)
+{ 
+    printf("%d ", array[i]);
+}
+printf("\n");
+}
+int main() {
+    int n;
+printf("Enter no element");
+scanf("%d",&n);
+int data[n];
+printf("Enter element");
+for(int i=0;i<n;i++) 
+{
+scanf("%d",&data[i]);
+}
+int size = sizeof(data) / sizeof(data[0]);
+clock_t t;
+t = clock();
+printf("Timer starts\n");
+selectionSort(data, size);
+printf("Timer ends \n"); 
+t = clock() - t;
+double time_taken = ((double)t)/CLOCKS_PER_SEC; 
+printf("The program took %f seconds to execute", time_taken);
+printf("Sorted array in Acsending Order:\n");
+printArray(data, size);
+}
+
+
+
+
+Qs
+
+#include <stdio.h>
+#include <time.h>
+void swap(int *a, int *b)
+{
+    int t = *a;
+    *a = *b;
+    *b = t;
+}
+int partition(int array[], int low, int high) {
+int pivot = array[high];
+int i = (low - 1);
+for (int j = low; j < high; j++)
+{
+    if (array[j] <= pivot) {
+     i++;
+     swap(&array[i], &array[j]);
+}
+}
+swap(&array[i + 1], &array[high]);
+return (i + 1);
+}
+void quickSort(int array[], int low, int high) {
+    if (low < high) 
+    {
+    int pi = partition(array, low, high);
+    quickSort(array, low, pi - 1);
+    quickSort(array, pi + 1, high);
+    }
+}
+void printArray(int array[], int size) {
+for (int i = 0; i < size; ++i)
+{
+    printf("%d ", array[i]);
+}
+printf("\n");
+}
+int main() {
+    int n;
+    printf("Enter no element");
+    scanf("%d",&n);
+    int data[n];
+    printf("Enter element");
+    for(int i=0;i<n;i++)
+    {
+    scanf("%d",&data[i]);
+    }
+printf("Unsorted Array\n");
+printArray(data, n);
+clock_t t;
+t = clock();
+printf("Timer starts\n");
+quickSort(data, 0, n - 1);
+printf("Timer ends\n");
+t = clock() - t;
+double time_taken = ((double)t)/CLOCKS_PER_SEC; // calculatetheelapsed time
+printf("The program took %f seconds to execute", time_taken);
+printf("Sorted array in ascending order:\n");
+printArray(data, n);
+}
+
+
+
+
+Ms
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#define MAX 50000
+void merge(int arr[], int p, int q, int r) {
+    int n1 = q - p + 1;
+    int n2 = r - q;
+    int i, j, k;
+    int L[n1], M[n2];
+for ( i = 0; i < n1; i++)
+L[i] = arr[p + i];
+for ( j = 0; j < n2; j++)
+M[j] = arr[q + 1+ j];
+i = 0;
+j = 0;
+k = p;
+while (i < n1 && j < n2)
+{
+    if (L[i] <= M[j]) {
+    arr[k] = L[i];i++;
+} 
+else {
+arr[k] = M[j];
+j++;
+}
+k++;
+}
+while (i < n1) {
+    arr[k] = L[i];
+    i++;
+    k++;
+}
+while (j < n2)
+{ 
+    arr[k] = M[j];j++;
+    k++;
+}
+}
+void mergeSort(int arr[], int l, int r) {
+    if (l < r) {
+    int m = l + (r - l) / 2;
+    mergeSort(arr, l, m);
+    mergeSort(arr, m + 1, r);merge(arr, l, m, r);
+}
+}
+void input_random(int arr[]){
+    time_t t;
+    srand((unsigned)
+    time(&t));int i;
+    for (i = 0; i < 50000; i++)
+    {
+    arr[i] = rand();
+    }
+}
+void input_best (int arr[]) {
+    int i;
+    for ( i = 0; i < MAX; i++)
+    arr[i] = i;
+}
+void input_worst(int arr[]) {
+    int i;
+    for ( i = 0; i < MAX; i++)
+    arr[i] = MAX - i;
+    }
+int averageCase()
+{ 
+    int arr[MAX];
+    input_random(arr);
+double time_spent = 0.0;
+clock_t begin = clock();
+mergeSort(arr, 0, MAX - 1);
+clock_t end = clock();
+time_spent += (double)(end - begin);
+printf("Average Case : %f seconds\n", time_spent);
+return 0;
+}
+int bestCase() {
+    int arr[MAX];
+    input_best(arr);
+    double time_spent = 0.0;
+    clock_t begin = clock();
+    mergeSort(arr, 0, MAX - 1);
+    clock_t end = clock();
+    time_spent += (double)(end - begin);
+printf("Best Case : %f seconds\n", time_spent);
+return 0;
+}
+int
+worstCase() {
+    int arr[MAX];
+    input_worst(arr);
+    double time_spent = 0.0;
+    clock_t begin = clock();
+    mergeSort(arr, 0, MAX - 1);
+    clock_t end = clock();
+    time_spent += (double)(end - begin);
+    printf("Worst Case : %f seconds\n", time_spent);
+    return 0;
+}
+int main()
+{
+printf("MergeSort\nNumber of Elements: %d\nWait...\n",MAX);
+averageCase();
+bestCase();
+worstCase();
+}
+
+
+
+
+Bf
+
+#include <stdio.h>
+int main()
+{
+int inf=999;
+int a[7][7]={{0,6,5,5,inf,inf,inf}, {inf,0,inf,inf,-1,inf,inf}, {inf,-2,0,inf,1,inf,inf}, {inf,inf,-2,0,inf,-1,inf}, {inf,inf,inf,inf,0,inf,3}, {inf,inf,inf,inf,inf,0,3},{inf,inf,inf,inf,inf,inf,0}};
+int n=7;
+int k=0;
+int d[n];
+int edge[10][2];
+for(int i=0;i<n;i++){
+for(int j=0;j<n;j++){ 
+    if(a[i][j]!=inf&&a[i][j]!=0){
+    edge[k][0]=i;
+    edge[k][1]=j;
+    k++;
+}
+}
+}
+for(int i=0;i<n;i++){
+    d[i] =inf;
+}
+d[0]=0;
+int u,v;
+for(int i=0;i<7;i++){ 
+    for(int j=0;j<10;j++){
+    u=edge[j][0];
+    v=edge[j][1];
+if(d[v]>d[u]+a[u][v]){
+  d[v]=d[u]+a[u][v];
+}
+}
+}
+for(int i=0;i<n;i++){
+printf("%d",d[i]);
+}
+}
+
+
+
+
+Lcs
+#include <stdio.h>
+int c[20][20];
+char b[20][20];
+void Lcs_length(char x[],char y[],int m,int n )
+{
+for(int i=0;i<m;i++)
+{
+c[i][0]=0;
+}
+for(int j=0;j<n;j++)
+{
+c[0][j]=0;
+}
+for(int i=1;i<=m;i++) { 
+    for(int j=1;j<=n;j++)
+{
+if(x[i-1]==y[j-1])
+{
+c[i][j]=c[i-1][j-1]+1;
+b[i][j]='d';
+}
+else if(c[i-1][j]>=c[i][j-1]){
+c[i][j]=c[i-1][j];
+b[i][j]='u';
+}
+else{
+c[i][j]=c[i][j-1];
+b[i][j]='l';
+}
+}
+}
+}
+void print_lcs(char b[20][20],char x[],int i,int j)
+{
+// printf(“%d %d: %c\n”,i,j,b[i][j]);
+if(i==0||j==0){
+return;
+}
+if(b[i][j]=='d'){
+// printf(“d: %c\n”,b[i][j]);
+print_lcs(b,x,i-1,j-1);
+printf("%c",x[i-1]);
+}
+else if(b[i][j]=='u')
+{
+// printf(“u: %c\n”,b[i][j]);
+print_lcs(b,x,i-1,j);
+}
+else{
+// printf(“l: %c\n”,b[i][j]);
+print_lcs(b,x,i,j-1); }
+}
+int main()
+{
+int x;
+printf("Enter no of element in string 1\n");
+scanf("%d",&x);
+int y;
+printf("Enter no of element in string 2\n");
+scanf("%d",&y);
+char s1[x];
+char s2[y];
+printf("Enter element in string 1\n");
+scanf("%s",s1);
+printf("Enter element in string 2\n");
+scanf("%s",s2);
+Lcs_length(s1,s2,x, y);
+for(int i=1;i<=x;i++)
+{
+for(int j=1;j<=y;j++)
+{
+printf("%d",c[i][j]);
+}
+printf("\n");
+}
+printf("\n");
+for(int i=1;i<=x;i++){ 
+    for(int j=1;j<=y;j++)
+{
+printf("%c",b[i][j]);
+}
+printf("\n");
+}
+print_lcs(b,s1,7,6);
+}
+
+
+
+
+Prims
+
+#include <stdio.h>
+#define V 5
+#define INF 999999
+int G[V][V] = { { 0, 2, 0, 6, 0 }, { 2, 0, 3, 8, 5 }, { 0, 3, 0, 0, 7 }, { 6, 8, 0, 0, 9 }, { 0, 5, 7, 9, 0 } };
+int main ()
+{
+int no_edge=0,x=0,y=0;
+int selected[V];
+for(int i=0;i<V;i++)
+{
+selected[i]=0;
+}
+selected[0]=1;
+int sum=0;
+while(no_edge<V-1)
+{
+int min=INF;
+for(int i=0;i<V;i++)
+{
+if(selected[i]){ 
+    for(int j=0;j<V;j++)
+{
+if(!selected[j]&&G[i][j])
+{
+if(min>G[i][j]){
+min=G[i][j];
+x=i;
+y=j;
+}
+}
+}
+}
+}
+selected[y]=1;
+sum+=G[x][y];
+printf("%d-%d\n",x,y);
+no_edge++;
+}
+printf("Cost of Mst is %d",sum);
+return 0;
+}
+
+
+
+
+Kruskal
+
+#include <stdio.h>
+#define MAX 30
+#define inf 999
+typedef struct edge {
+int u,v,w;
+}
+edge;
+typedef struct edge_list{
+    edge data[MAX];
+int n;
+}
+edge_list;
+edge_list elist;
+int Graph[MAX][MAX], n;
+edge_list spanlist;
+void kruskalAlgo();
+int find(int belongs[],int vertex_no);
+void applyUnion(int belongs[],int c1,int c2);
+void sort();
+void print();
+void kruskalAlgo()
+{
+int belongs[MAX],i,j,cno1,cno2;
+elist.n=0;
+for(i=1;i<n;i++)
+{
+for(j=0;j<i;j++)
+{
+if(Graph[i][j]!=0)
+{
+elist.data[elist.n].u=i;
+elist.data[elist.n].v=j;
+elist.data[elist.n].w=Graph[i][j];
+elist.n++;
+}
+}
+}
+sort();
+for(int i=0;i<elist.n;i++)
+{
+belongs[i]=i;
+}
+spanlist.n=0;
+for(int i=0;i<elist.n;i++)
+{
+cno1 = find(belongs, elist.data[i].u);
+cno2 = find(belongs, elist.data[i].v);
+if (cno1 != cno2)
+{ 
+    spanlist.data[spanlist.n] = elist.data[i];
+    spanlist.n = spanlist.n + 1;
+    applyUnion(belongs, cno1, cno2);
+}
+}
+}
+void sort()
+{
+for(int i=1;i<elist.n;i++)
+{ 
+    int temp=0;
+for(int j=0;j<elist.n-1;j++)
+{
+if(elist.data[j].w>elist.data[j].w)
+{
+temp=elist.data[j].w;
+elist.data[j].w=elist.data[j+1].w;
+elist.data[j+1].w=temp;
+}
+}
+}
+}
+int find(int belongs[],int vertex_no)
+{
+return (belongs[vertex_no]);
+}
+void applyUnion(int belongs[],int c1,int c2)
+{
+int i;
+for (i = 0; i < n; i++)
+if (belongs[i] == c2)belongs[i] = c1;
+}
+void print() {
+    int cost=0;
+for (int i = 0; i < spanlist.n; i++) {
+printf("\n%d - %d : %d", spanlist.data[i].u, spanlist.data[i].v, spanlist.data[i].w);cost = cost + spanlist.data[i].w;
+}
+printf("\nSpanning tree cost: %d", cost);
+}
+int main()
+{
+int i, j, total_cost;
+n = 6;
+Graph[0][0] = 0;
+Graph[0][1] = 4;
+Graph[0][2] = 4;
+Graph[0][3] = 0;
+Graph[0][4] = 0;
+Graph[0][5] = 0;
+Graph[0][6] = 0;
+Graph[1][0] = 4;
+Graph[1][1] = 0;
+Graph[1][2] = 2;
+Graph[1][3] = 0;
+Graph[1][4] = 0;
+Graph[1][5] = 0;
+Graph[1][6] = 0;
+Graph[2][0] = 4;
+Graph[2][1] = 2;
+Graph[2][2] = 0;
+Graph[2][3] = 3;
+Graph[2][4] = 4;
+Graph[2][5] = 0;
+Graph[2][6] = 0;
+Graph[3][0] = 0;
+Graph[3][1] = 0;
+Graph[3][2] = 3;
+Graph[3][3] = 0;
+Graph[3][4] = 3;
+Graph[3][5] = 0;
+Graph[3][6] = 0;
+Graph[4][0] = 0;
+Graph[4][1] = 0;
+Graph[4][2] = 4;
+Graph[4][3] = 3;
+Graph[4][4] = 0;
+Graph[4][5] = 0;
+Graph[4][6] = 0;
+Graph[5][0] = 0;
+Graph[5][1] = 0;
+Graph[5][2] = 2;
+Graph[5][3] = 0;
+Graph[5][4] = 3;
+Graph[5][5] = 0;
+Graph[5][6] = 0;
+kruskalAlgo();
+print();
+}
+
+
+
+
+Dijkstra
+
+#include <stdio.h>
+int main()
+{
+int a[6][6];
+int k=9999;
+for(int i=0;i<6;i++){ 
+    for(int j=0;j<6;j++){
+    a[i][j]=k;
+}
+}
+a[0][1]=7;
+a[0][5]=3;
+a[1][0]=7;
+a[1][2]=4;
+a[1][5]=2;
+a[2][1]=4;
+a[2][3]=8;
+a[2][4]=5;
+a[3][2]=8;
+a[3][4]=3;
+a[4][2]=5;
+a[4][3]=3;
+a[4][5]=6;
+a[5][0]=3;
+a[5][1]=2;
+a[5][2]=5;
+a[5][4]=6;
+int v[6];
+int p[11];
+for(int i=0;i<6;i++){
+    v[i]= 0;
+}
+int d[6];
+for(int i=0;i<6;i++){
+    d[i]= k;
+}
+d[1]=7,d[5]=3;
+d[0]=0;
+int x=0;
+int j=0;
+while(j<6){
+int index,min=k;
+for(int i=0;i<6;i++)
+{
+if(v[i]==1)
+{
+continue;
+}
+if(d[i]<min)
+{
+index=i;
+min=d[i];
+}
+}
+v[index]=1;
+for(int k=0;k<6;k++)
+{
+if(d[k]>d[index]+a[index][k])
+{
+d[k]=d[index]+a[index][k];
+}
+}
+j++;
+}
+for(int i=0;i<6;i++){
+    printf("%d ",d[i]);
+}
+}
+
+
+
+
+Nqueen
+
+#include <stdio.h>
+#include<math.h>
+int board[10],count;
+int place(int row,int column)
+{
+int i;
+for(i=1;i<=row-1;++i)
+{
+if(board[i]==column)
+return 0;
+else if(abs(board[i]-column)==abs(i-row))
+return 0;
+}
+return 1;
+}
+void print(int n)
+{
+int i,j;
+printf("\n\nSolution %d:\n\n",++count);
+for(i=1;i<=n;++i){
+printf("\t%d",i);
+}
+for(int i=1;i<=n;i++)
+{
+printf("\n\n%d",i);
+for(j=1;j<=n;++j)
+{
+if(board[i]==j)
+printf("\tq");
+else
+printf("\t-");
+}
+}
+}
+void nQueen(int row,int n)
+{
+int column;
+for(column=1;column<=n;column++)
+{
+if(place(row,column))
+{
+board[row]=column;
+if(row==n)
+print(n);
+else
+nQueen(row+1,n);
+}
+}
+}
+int main()
+{
+printf("N queen using backtracking");
+printf("Enter no of queen ");
+int n;
+scanf("%d",&n);
+nQueen(1,n);
+return 0;
+}
+
+
+
+
+Sos
+
+#include <stdio.h>
+int subsetSum(int A[],int n,int k)
+{
+if(k==0){ 
+    return 1;
+}
+if(n<0||k<0){
+return 0;
+}
+int include=subsetSum(A,n-1,k- A[n]); 
+int exclude=subsetSum(A,n-1,k);
+return include||exclude;
+}
+int main()
+{
+int n;
+printf("Enter no element in array\n");
+scanf("%d",&n);
+int a[n];
+printf("Enter element\n");
+for(int i=0;i<n;i++)
+{
+scanf("%d",&a[i]);
+}
+int k;
+printf("Enter sum to be obtained\n");
+scanf("%d",&k);
+if(subsetSum(a,n-1,k))
+{
+printf("Subsequence is found");
+}
+else{
+printf("Subsequence is not found");
+}
+return 0;
+}
+
+
+
+
+Gc
+
+#include <stdbool.h>
+#include <stdio.h>
+#define V 4
+void printSolution(int color[]);
+bool isSafe( int v, bool graph[V][V], int color[], int c)
+{
+for (int i = 0; i < V; i++)
+if (graph[v][i] && c == color[i])
+return false;
+return true;
+}
+bool graphColoringUtil( bool graph[V][V], int m, int color[], int v)
+{
+if (v == V)
+return true;
+for (int c = 1; c <= m; c++) {
+if (isSafe(v, graph, color, c))
+{
+    color[v] = c;
+if
+( graphColoringUtil(graph, m, color, v + 1) == true)
+return true;
+color[v] = 0;
+}
+}
+return false;
+}
+bool graphColoring(bool graph[V][V], int m)
+{
+int color[V];
+for (int i = 0; i < V; i++)
+color[i] = 0;
+if (graphColoringUtil(graph, m, color, 0)==false) {
+    printf("Solution does not exist");
+return false;
+}
+printSolution(color);
+return true;
+}
+void printSolution(int color[])
+{
+printf( "Solution Exists:" " Following are the assigned colors\n");
+for (int i = 0; i < V; i++)
+printf(" %d ", color[i]);printf("\n");
+}
+int main()
+{
+bool graph[V][V] = {{ 0, 1, 1, 1 }, { 1, 0, 1, 0 }, { 1, 1, 0, 1 }, { 1, 0, 1, 0 }, };
+int m = 3;
+graphColoring(graph, m);
+return 0;
+}
+
+
+
+
+Rk
+
+#include <stdio.h>
+#include <malloc.h>
+#include <string.h>
+int *calculate_lsp(char *pattern)
+{
+int m = strlen(pattern);
+int *lsp = (int *)malloc(sizeof(int) * m);
+lsp[0] = 0;
+int i = 1, len = 0;
+while (i < m) {
+if (pattern[i] == pattern[len]) { 
+    ++len;
+    lsp[i] = len;
+    ++i;
+}
+else{
+if (len != 0)
+len = lsp[len - 1];
+else
+{
+lsp[i] = 0;
+++i;
+} 
+    }
+}
+return lsp; 
+    }
+void kmp(char *string, char *pattern)
+{
+int pattern_n = strlen(pattern);
+int string_n = strlen(string);
+if (string_n < pattern_n)
+{
+printf("Pattern not found\n");
+return; 
+}
+int *lsp = calculate_lsp(pattern);
+int i = 0, j = 0;
+while (i < string_n)
+{
+if (pattern[j] == string[i])
+++i, ++j;
+if (j == pattern_n)
+{
+printf("Pattern found at %d\n", i - pattern_n);
+j = lsp[j - 1];
+}
+else if (i < string_n && pattern[j] != string[i])
+{
+if (j != 0)
+j = lsp[j - 1];
+else ++i;
+} 
+    }
+}
+int main() {
+char string[100], pattern[100];
+printf("Enter string: \n"); 
+scanf("%s", string); 
+printf("Enter pattern: \n");
+scanf("%s", pattern);
+kmp(string, pattern); 
+return 0; 
+}
+
+
+
+
+
