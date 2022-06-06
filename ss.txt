@@ -1,0 +1,47 @@
+#include <stdio.h>
+#include <time.h>
+void swap(int *a, int *b)
+{
+    int temp = *a;
+    *a = *b;
+    *b = temp;
+}
+void selectionSort(int array[], int size)
+{ 
+    for (int step = 0; step < size - 1; step++) {
+        int min_idx = step;
+    for (int i = step + 1; i < size; i++) {
+    if (array[i] < array[min_idx])min_idx= i;
+}
+swap(&array[min_idx], &array[step]);
+}
+}
+void printArray(int array[], int size) {
+    for (int i = 0; i < size; ++i)
+{ 
+    printf("%d ", array[i]);
+}
+printf("\n");
+}
+int main() {
+    int n;
+printf("Enter no element");
+scanf("%d",&n);
+int data[n];
+printf("Enter element");
+for(int i=0;i<n;i++) 
+{
+scanf("%d",&data[i]);
+}
+int size = sizeof(data) / sizeof(data[0]);
+clock_t t;
+t = clock();
+printf("Timer starts\n");
+selectionSort(data, size);
+printf("Timer ends \n"); 
+t = clock() - t;
+double time_taken = ((double)t)/CLOCKS_PER_SEC; 
+printf("The program took %f seconds to execute", time_taken);
+printf("Sorted array in Acsending Order:\n");
+printArray(data, size);
+}

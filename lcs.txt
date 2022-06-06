@@ -1,0 +1,85 @@
+#include <stdio.h>
+int c[20][20];
+char b[20][20];
+void Lcs_length(char x[],char y[],int m,int n )
+{
+for(int i=0;i<m;i++)
+{
+c[i][0]=0;
+}
+for(int j=0;j<n;j++)
+{
+c[0][j]=0;
+}
+for(int i=1;i<=m;i++) { 
+    for(int j=1;j<=n;j++)
+{
+if(x[i-1]==y[j-1])
+{
+c[i][j]=c[i-1][j-1]+1;
+b[i][j]='d';
+}
+else if(c[i-1][j]>=c[i][j-1]){
+c[i][j]=c[i-1][j];
+b[i][j]='u';
+}
+else{
+c[i][j]=c[i][j-1];
+b[i][j]='l';
+}
+}
+}
+}
+void print_lcs(char b[20][20],char x[],int i,int j)
+{
+// printf(“%d %d: %c\n”,i,j,b[i][j]);
+if(i==0||j==0){
+return;
+}
+if(b[i][j]=='d'){
+// printf(“d: %c\n”,b[i][j]);
+print_lcs(b,x,i-1,j-1);
+printf("%c",x[i-1]);
+}
+else if(b[i][j]=='u')
+{
+// printf(“u: %c\n”,b[i][j]);
+print_lcs(b,x,i-1,j);
+}
+else{
+// printf(“l: %c\n”,b[i][j]);
+print_lcs(b,x,i,j-1); }
+}
+int main()
+{
+int x;
+printf("Enter no of element in string 1\n");
+scanf("%d",&x);
+int y;
+printf("Enter no of element in string 2\n");
+scanf("%d",&y);
+char s1[x];
+char s2[y];
+printf("Enter element in string 1\n");
+scanf("%s",s1);
+printf("Enter element in string 2\n");
+scanf("%s",s2);
+Lcs_length(s1,s2,x, y);
+for(int i=1;i<=x;i++)
+{
+for(int j=1;j<=y;j++)
+{
+printf("%d",c[i][j]);
+}
+printf("\n");
+}
+printf("\n");
+for(int i=1;i<=x;i++){ 
+    for(int j=1;j<=y;j++)
+{
+printf("%c",b[i][j]);
+}
+printf("\n");
+}
+print_lcs(b,s1,7,6);
+}
