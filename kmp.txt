@@ -1,0 +1,49 @@
+#include<stdio.h>
+#include<string.h>
+int pi[100];
+
+void computePrefix(char pat[]){
+	int q,m,k=0;
+	m=strlen(pat);
+	pi[0]=0;
+	for(q=1;q<m;q++){
+		while(k>0 && pat[k]!=pat[q]){
+			k=pi[k-1];
+		}
+		if(pat[k]==pat[q]){
+			k=k+1;
+		}
+		pi[q]=k;
+	}
+	return;
+}
+
+void kmp(char txt[],char pat[]){
+	int i,m,n,q;
+	n=strlen(txt);
+	m=strlen(pat);
+	computePrefix(pat);
+	q=0;
+	for(i=0;i<n;i++){
+		while(q>0 && pat[q]!=txt[i]){
+			q=pi[q-1];
+		}
+		if (pat[q]==txt[i])
+			q=q+1;
+		if (q==m){
+			printf("Pattern Occurs at index %d \n",(i-(m-1)));
+			q=pi[q-1];	
+		}
+
+	}
+	return;
+}
+int main(){
+	char txt[ 100],pat[100 ] ;
+	printf("Enter Text: ");
+	scanf("%s",&txt);
+	printf("Enter Pattern: ");
+	scanf("%s",&pat);
+	kmp(txt,pat);
+	return 0;
+}
